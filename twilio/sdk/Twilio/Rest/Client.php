@@ -40,11 +40,13 @@ use Twilio\VersionInfo;
  * @property \Twilio\Rest\Studio studio
  * @property \Twilio\Rest\Verify verify
  * @property \Twilio\Rest\Voice voice
+ * @property \Twilio\Rest\Insights insights
  * @property \Twilio\Rest\Api\V2010\AccountInstance account
  * @property \Twilio\Rest\Api\V2010\Account\AddressList addresses
  * @property \Twilio\Rest\Api\V2010\Account\ApplicationList applications
  * @property \Twilio\Rest\Api\V2010\Account\AuthorizedConnectAppList authorizedConnectApps
  * @property \Twilio\Rest\Api\V2010\Account\AvailablePhoneNumberCountryList availablePhoneNumbers
+ * @property \Twilio\Rest\Api\V2010\Account\BalanceList balance
  * @property \Twilio\Rest\Api\V2010\Account\CallList calls
  * @property \Twilio\Rest\Api\V2010\Account\ConferenceList conferences
  * @property \Twilio\Rest\Api\V2010\Account\ConnectAppList connectApps
@@ -115,6 +117,7 @@ class Client {
     protected $_studio = null;
     protected $_verify = null;
     protected $_voice = null;
+    protected $_insights = null;
 
     /**
      * Initializes the Twilio Client
@@ -360,6 +363,13 @@ class Client {
      */
     protected function contextAvailablePhoneNumbers($countryCode) {
         return $this->api->v2010->account->availablePhoneNumbers($countryCode);
+    }
+
+    /**
+     * @return \Twilio\Rest\Api\V2010\Account\BalanceList 
+     */
+    protected function getBalance() {
+        return $this->api->v2010->account->balance;
     }
 
     /**
@@ -837,6 +847,18 @@ class Client {
             $this->_voice = new Voice($this);
         }
         return $this->_voice;
+    }
+
+    /**
+     * Access the Insights Twilio Domain
+     * 
+     * @return \Twilio\Rest\Insights Insights Twilio Domain
+     */
+    protected function getInsights() {
+        if (!$this->_insights) {
+            $this->_insights = new Insights($this);
+        }
+        return $this->_insights;
     }
 
     /**
